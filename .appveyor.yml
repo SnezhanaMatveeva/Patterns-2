@@ -1,6 +1,6 @@
 image: Ubuntu
 
-stack: jdk 11
+stack: jdk 17
 
 branches:
   only:
