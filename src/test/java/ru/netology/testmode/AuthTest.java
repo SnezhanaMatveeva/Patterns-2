@@ -53,7 +53,7 @@ class AuthTest {
     @DisplayName("Should get error message if login with wrong login")
     void shouldGetErrorIfWrongLogin() {
         var registeredUser = getRegisteredUser("active");
-        var wrongLogin = getRandomLogin();
+       var wrongLogin = getRandomLogin();
         $("[data-test-id='login'] input").setValue(wrongLogin);
         $("[data-test-id='password'] input").setValue(registeredUser.getPassword());
         $$("[class='button__text']").find(Condition.exactText("Продолжить")).click();
