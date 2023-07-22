@@ -16,7 +16,7 @@ class AuthTest {
 
     @BeforeEach
     void setup() {
-        open("http://localhost:9999");
+        open("http://localhost:7777");
     }
 
     @Test
@@ -25,10 +25,8 @@ class AuthTest {
         var registeredUser = getRegisteredUser("active");
         $("[data-test-id='login'] input").setValue(registeredUser.getLogin());
         $("[data-test-id='password'] input").setValue(registeredUser.getPassword());
-        $$("[class='button__text']").find(Condition.exactText("Продолжить")).click();
-        $("h2").should(Condition.text("Личный кабинет")).should(Condition.visible);
-
-
+        $("button.button").click()
+        $("h2").shouldHave(Condition.exactText("Личный кабинет")).shouldBe(Condition.visible);
     }
 
     @Test
@@ -39,8 +37,6 @@ class AuthTest {
         $("[data-test-id='password'] input").setValue(notRegisteredUser.getPassword());
         $$("[class='button__text']").find(Condition.exactText("Продолжить")).click();
         $("div.notification__content").should(Condition.text("Неверно указан логин или пароль")).should(Condition.visible);
-
-
     }
 
     @Test
@@ -49,10 +45,8 @@ class AuthTest {
         var blockedUser = getRegisteredUser("blocked");
         $("[data-test-id='login'] input").setValue(blockedUser.getLogin());
         $("[data-test-id='password'] input").setValue(blockedUser.getPassword());
-        $$("[class='button__text']").find(Condition.exactText("Продолжить")).click();
-        $("div.notification__content").should(Condition.text("Пользователь заблокирован")).should(Condition.visible);
-
-
+        $("button.button").click();
+        $("[data-test-id='error-notification'] .notification__content").shouldHave(Condition.text("Ошибка! Пользователь заблокирован")).shouldBe(Condition.visible);
     }
 
     @Test
@@ -64,8 +58,6 @@ class AuthTest {
         $("[data-test-id='password'] input").setValue(registeredUser.getPassword());
         $$("[class='button__text']").find(Condition.exactText("Продолжить")).click();
         $("div.notification__content").should(Condition.text("Неверно указан логин или пароль")).should(Condition.visible);
-
-
     }
 
     @Test
@@ -77,7 +69,5 @@ class AuthTest {
         $("[data-test-id='password'] input").setValue(wrongPassword);
         $$("[class='button__text']").findBy(Condition.exactText("Продолжить")).click();
         $("div.notification__content").should(Condition.text("Неверно указан логин или пароль")).should(Condition.visible);
-
-
     }
 }

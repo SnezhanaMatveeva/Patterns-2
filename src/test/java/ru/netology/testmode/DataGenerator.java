@@ -1,4 +1,5 @@
 package ru.netology.testmode;
+
 import com.github.javafaker.Faker;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
@@ -15,7 +16,7 @@ public class DataGenerator {
 
     private static final RequestSpecification requestSpec = new RequestSpecBuilder()
             .setBaseUri("http://localhost")
-            .setPort(9999)
+            .setPort(7777)
             .setAccept(ContentType.JSON)
             .setContentType(ContentType.JSON)
             .log(LogDetail.ALL)
@@ -33,18 +34,15 @@ public class DataGenerator {
                 .post("/api/system/users")
                 .then()
                 .statusCode(200);
-
     }
 
     public static String getRandomLogin() {
         String login = faker.name().username();
         return login;
-
     }
 
     public static String getRandomPassword() {
         return faker.internet().password();
-
     }
 
     public static class Registration {
@@ -54,14 +52,12 @@ public class DataGenerator {
         public static RegistrationDto getUser(String status) {
             var user = new RegistrationDto(getRandomLogin(), getRandomPassword(), status);
             return user;
-
         }
 
         public static RegistrationDto getRegisteredUser(String status) {
             var registeredUser = getUser(status);
             sendRequest(registeredUser);
             return registeredUser;
-
         }
     }
 
